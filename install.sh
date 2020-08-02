@@ -14,12 +14,12 @@ for file in ./.{bash_profile,bashrc,tmux.conf,vimrc}; do
 done;
 
 # install tmux plugin manager
-# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # install tmux plugins
-# ~/.tmux/plugins/tpm/bin/install_plugins
+~/.tmux/plugins/tpm/bin/install_plugins
 echo '[*] tmux plugin manager installed'
 
 # update tmux plugins
-# ~/.tmux/plugins/tpm/bin/update_plugins all
+~/.tmux/plugins/tpm/bin/update_plugins all
 echo '[*] tmux plugins updated'

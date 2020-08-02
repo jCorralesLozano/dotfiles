@@ -1,8 +1,4 @@
-# run the .bash_profile script
-if [ -r ~/.bash_profile ] && [ -f ~/.bash_profile ]; then
-    source ~/.bash_profile
-fi
-
+echo 'my name is bashrc'
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
