@@ -24,3 +24,7 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+#env variables for GO
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH

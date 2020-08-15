@@ -2,7 +2,7 @@
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # verify the existence of specific dotfiles
-for file in ./.{bash_profile,bashrc,tmux.conf,vimrc}; do
+for file in ./.{bash_profile,bashrc,tmux.conf,vimrc,zshrc}; do
 	if [ -r "$file" ] && [ -f "$file" ]; then
 		# trim the dot and fslash for the $file variable
 		file=`echo $file | sed 's:^\./*::g'`
