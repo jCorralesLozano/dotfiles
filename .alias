@@ -1,2 +1,14 @@
+# output hidden files with details
 alias ll='ls -al'
+
+# copy output to clipboard, use with '|'
 alias xcsc='xclip -sel clip'
+
+# launch burp as background process
+alias burp='burpsuite &'
+
+# alias for alias-finder
+alias af='alias-finder'
+
+# include all matches when looking for aliases
+alias afl='alias-finder -l'
