@@ -1,10 +1,11 @@
-# base directory
+#base directory
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # verify the existence of specific dotfiles
-for file in ./.{bash_profile,bashrc,tmux.conf,vimrc,zshrc}; do
+for file in ./.{bash_profile,bashrc,tmux.conf,vimrc,zshrc,alias}; do
 	if [ -r "$file" ] && [ -f "$file" ]; then
 		# trim the dot and fslash for the $file variable
+        # result will be .<file> instead of ./.<file>
 		file=`echo $file | sed 's:^\./*::g'`
 
 		# create symlink in users home directory
