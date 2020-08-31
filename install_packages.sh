@@ -19,27 +19,8 @@ sudo apt install rinetd # port forwading tool
 sudo apt install httptunnel # encapsulate traffic in http tunnel, look for setup script
 sudo apt install kerberoast 
 sudo apt install metasploit-framework
-
-# Komorebi dependencies (live wallpaper)
-sudo apt-get install gdebi
-sudo apt install libgee-0.8-2
-sudo apt install cmake
-sudo apt install gcc-9-base libgcc-9-dev libc6-dev
-sudo apt install valac
-sudo apt install build-essential libgtk-3-dev
-sudo apt install gee-0.8
-sudo apt install webkit2gtk-4.0
-sudo apt install libclutter-gtk-1.0-dev
-sudo apt install libclutter-gst-3.0-dev
-# I dont think these ones are needed for komorebi
-# sudo apt install libclutter-1.0-0
-# sudo apt install libclutter-1.0-common 
-# sudo apt install libclutter-gst-3.0-0 
-# sudo apt install libclutter-gtk-1.0-0 
-# sudo apt install libcogl-common 
-# sudo apt install libcogl-pango20 
-# sudo apt install libcogl-path20 
-# sudo apt install libcogl20 
+sudo apt install nfs-common # showmount and other stuff
+sudo apt install unicornscan
 
 # setup ffuf
 wget https://dl.google.com/go/go1.11.linux-amd64.tar.gz

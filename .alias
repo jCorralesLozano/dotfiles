@@ -1,3 +1,6 @@
+##### NOTES ######
+# append commands with 'nocorrect' to disable zsh autocorrect
+
 # output hidden files with details
 alias ll='ls -al'
 
@@ -12,3 +15,9 @@ alias af='alias-finder'
 
 # include all matches when looking for aliases
 alias afl='alias-finder -l'
+
+# view listening ports and pid
+alias ns='nocorrect netstat -tupln'
+
+# dirbusting wordlist
+alias ffuf_scan='ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt'

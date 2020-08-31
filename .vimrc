@@ -15,3 +15,6 @@ set title
 
 " turn syntax highlighting on
 syntax on
+
+" insert mode, press jj to enter command mode
+inoremap jj <Esc>

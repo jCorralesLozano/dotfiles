@@ -58,7 +58,7 @@ COMPLETION_WAITING_DOTS="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="%d/%m/%y %T"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -68,7 +68,14 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages nmap alias-finder)
+plugins=(git 
+    colored-man-pages 
+    nmap 
+    alias-finder
+    chucknorris
+    colorize
+    zsh-syntax-highlighting)
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -96,8 +103,6 @@ HISTSIZE=10000
 # export ARCHFLAGS="-arch x86_64"
 
 ### User Alias, overrides plugins ###
-#alias ll='ls -al'
-#alias xcsc='xclip -sel clip'
 if [ -r ~/.alias ] && [ -f ~/.alias ]; then
     source ~/.alias
 fi;
