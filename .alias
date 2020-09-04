@@ -20,4 +20,4 @@ alias afl='alias-finder -l'
 alias ns='nocorrect netstat -tupln'
 
 # dirbusting wordlist
-alias ffuf_scan='ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt'
+alias ffuf_scan='ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt'
