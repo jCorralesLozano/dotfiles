@@ -5,7 +5,10 @@ set autoindent
 set expandtab
 
 " Indent using four spaces
-set tabstop=4
+set tabstop=8
+
+" set indent when using '>' to 4 
+set shiftwidth=4
 
 " Show line numbers 
 set number
