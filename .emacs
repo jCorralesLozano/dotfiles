@@ -143,5 +143,5 @@
 ;; Key Bindings
 ;; ====================================
 
-(load "C:/Users/corrlea/AppData/Roaming/keybindings")
+(load "C:/Users/corrlea/dotfiles/.emacs_bindings.el")
 ;; User-Defined init.el ends here
