@@ -133,6 +133,7 @@ If editing content at the top of an org file, you have to manually refresh the d
 
 ;; enable command-log-mode *remember to use global-command-log-mod
 (require 'command-log-mode)
+
     #+end_src
 *** Theme
     #+begin_src emacs-lisp
@@ -140,7 +141,6 @@ If editing content at the top of an org file, you have to manually refresh the d
 (load-theme 'material t)
     #+end_src
 *** Which Key
-** Keybinding Configuration
 *** Transpose-frame package
     #+begin_src emacs-lisp
 ;; swap x and y direction
@@ -236,9 +236,8 @@ If editing content at the top of an org file, you have to manually refresh the d
 (setq org-agenda-files
       (append
            (file-expand-wildcards "~/org/*.org")
-	   (file-expand-wildcards "~/org/tickets/*.org")
-	   (file-expand-wildcards "~/Documents/Notes/*.org")
-	   )
+           (file-expand-wildcards "~/org/tickets/*.org")
+       )
 )
 
 ;; include entries from diary into agenda
@@ -292,6 +291,13 @@ If editing content at the top of an org file, you have to manually refresh the d
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
      #+end_src
+*** Clock
+#+begin_src emacs-lisp
+;; set idle timer to stop timer if AFK for too long
+(setq org-clock-idle-time 15)
+
+
+#+end_src
 *** Key bindings
 #+begin_src emacs-lisp
 (define-key org-mode-map "\M-n" 'org-metaleft)
