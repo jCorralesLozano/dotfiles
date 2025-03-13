@@ -32,56 +32,72 @@
      (360 . "#8bc34a")))
  '(vc-annotate-very-old-color nil))
 
-;; Enables basic packaging support
-(require 'package)
+     ;; Enables basic packaging support
+     (require 'package)
 
-;; Adds the Melpa archive to the list of available repositories
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("org" . "http:/orgmode.org/elpa/") t)
-(add-to-list 'package-archives '("elpa" . "http:/elpa.gnu.org/packages/") t) 
+     ;; Adds the Melpa archive to the list of available repositories
+     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+     (add-to-list 'package-archives '("org" . "https:/orgmode.org/elpa/") t)
+     (add-to-list 'package-archives '("elpa" . "https:/elpa.gnu.org/packages/") t) 
 
-;; Initializes the package infrastructure
-(package-initialize)
+     ;; Initializes the package infrastructure
+     (package-initialize)
 
-;; If there are no archived package contents, refresh them
-(when (not package-archive-contents)
-  (package-refresh-contents))
+     ;; If there are no archived package contents, refresh them
+     (when (not package-archive-contents)
+       (package-refresh-contents))
 
-;; installs packages
-;; myPackages contains a list of package names
-(defvar myPackages
-  '(better-defaults                 ;; Set up some better Emacs defaults
-    elpy                                   ;; Emacs Lisp Python Environment
-    flycheck                            ;; On the fly syntax checking
-    blacken                              ;; format python code on save
-    py-autopep8                       ;; Run autopep8 on save
-    material-theme                   ;; Theme
-    excorporate                       ;; MS Outlook integration
-    ein                                      ;; Emacs IPython Notebook
-    transpose-frame                 ;; transpose frames
-    magit                                   ;; git integration
-    use-package                         ;; :shrug:
-    command-log-mode              ;; toggle keyboard command logging
-    ivy                                       ;; command completion framework?
-    counsel                                ;; useful UI for interactive features
-    doom-modeline                    ;; make the modeline look pretty
-    all-the-icons                   ;; cool icons, used with doom
-    )
-  )
+     ;; installs packages
+     ;; myPackages contains a list of package names
+     (defvar myPackages
+       '(better-defaults                 ;; Set up some better Emacs defaults
+	 gnu-elpa-keyring-update             ;; ensure keyring is up to date
+	 elpy                                   ;; Emacs Lisp Python Environment
+	 flycheck                            ;; On the fly syntax checking
+	 blacken                              ;; format python code on save
+	 py-autopep8                       ;; Run autopep8 on save
+	 material-theme                   ;; Theme
+	 excorporate                       ;; MS Outlook integration
+	 ein                                      ;; Emacs IPython Notebook
+	 transpose-frame                 ;; transpose frames
+	 magit                                   ;; git integration
+	 use-package                         ;; :shrug:
+	 command-log-mode              ;; toggle keyboard command logging
+	 ivy                                       ;; command completion framework?
+	 counsel                                ;; useful UI for interactive features
+	 doom-modeline                    ;; make the modeline look pretty
+	 doom-themes
+	 all-the-icons                   ;; cool icons, used with doom
+	 org-roam
+     org-roam-ui
+;     org-ql
+	 ledger-mode
+	 treemacs                       ;; file tree for code projects
+	 vue-mode
+	 web-mode
+	 lsp-ui
+	 lsp-mode
+	 company
+	 emmet-mode
+	 org-chef
+	 )
+       )
 
-;; Scans the list in myPackages
-;; If the package listed is not already installed, install it
-(mapc #'(lambda (package)
-          (unless (package-installed-p package)
-            (package-install package)))
-      myPackages)
+     ;; Note: run package-refresh-contents if a package is not installing
+
+     ;; Scans the list in myPackages
+     ;; If the package listed is not already installed, install it
+     (mapc #'(lambda (package)
+	       (unless (package-installed-p package)
+		 (package-install package)))
+	   myPackages)
 
 (use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+       :ensure t
+       :init (doom-modeline-mode 1))
 
 (setq inhibit-startup-message t)    ;; Hide the startup message
-(global-linum-mode t)               ;; Enable line numbers globally
+(display-line-numbers-mode t)               ;; Enable line numbers globally
 (when (eq system-type 'windows-nt)        ;; cross platform setup
   (setenv "Home" (getenv "UserProfile"))) ;; set HOME variable
 (setq tab-width 4)                  ;; set tab width
@@ -94,9 +110,6 @@
 ;; setup the visual bell
 (setq visible-bell t)
 
-;; quick start tramp - windows only
-(setq tramp-default-method "plink")
-
 ;; enable transpose windows
 (require 'transpose-frame)
 
@@ -105,8 +118,8 @@
 (setq exec-path (append exec-path '("C:/Users/corrlea/Downloads/zip-3.0-bin/bin")))
 
 ;; make the modeline pretty
-;; (require 'doom-modeline)
-;; (doom-modeline-mode 1)
+(require 'doom-modeline)
+(doom-modeline-mode 1)
 
 ;; ;; load the icons
 ;; (require 'all-the-icons)
@@ -166,6 +179,39 @@
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
 
+;; Set tab width to 4 spaces (adjust as needed)
+(add-hook 'html-mode-hook
+          (lambda ()
+            (setq-local sgml-basic-offset 4)))
+(add-hook 'css-mode-hook
+          (lambda ()
+            (setq-local sgml-basic-offset 4)))
+
+(require 'tramp)
+;; quick start tramp - windows only
+(setq tramp-default-method "plink")
+
+;; set default user
+(setq tramp-default-user "corrlea")
+
+;; set default host
+(setq tramp-default-host "dev-dsk-corrlea-1e-d2040f56.us-east-1.amazon.com")
+
+;; add in bin directorys to use Amazon tooling specific commands such as brazil-build, ada, odin, etc
+(add-to-list 'tramp-remote-path "/apollo/env/AAAWorkspaceSupport/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/ApolloCommandLine/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/BarkCLI/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/DevDesktopAL2/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/DJSAgent_MultiRegionConsumed/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/envImprovement/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/NawsEnumeration/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/OdinTools/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/PyAmznCertMetrics/bin")
+(add-to-list 'tramp-remote-path "/apollo/env/RemoteOverrideSupport/bin")
+;; toolbox binaries don't seem to work, but they all contain pointers to another directory
+(add-to-list 'tramp-remote-path "/home/corrlea/.toolbox/bin")
+(add-to-list 'tramp-remote-path "/home/corrlea/.toolbox/tools/toolbox/1.1.1531.0/toolbox-exec")
+
 ;; Enable org mode
 (require 'org)
 
@@ -199,6 +245,152 @@
 ;; Enable transient mark mode
 (transient-mark-mode 1)
 
+;; Add directorys for org-roam-directory
+(setq org-directory
+      (append
+           (file-expand-wildcards "~/org-roam/*.org")
+           (file-expand-wildcards "~/org-roam/daily/*.org")
+       )
+)
+
+(defun my/org-roam-capture-template ()
+  "Capture template for Org Roam nodes."
+  (let ((id (org-id-new))
+        (date (format-time-string "%Y-%m-%d")))
+    (concat "* " date " %<%I:%M %p> "  (read-string "Heading: ") "\n" 
+            ":PROPERTIES:\n"
+            ":DATE: " date "\n"
+	    ":PROJECT: " (read-string "Project: ") "\n" 
+            ":END:\n"
+	          "** Agenda | Purpose\n** Notes\n** Action Items\n** Questions\n** Decisions"
+            "%?")))
+
+(defun my/org-capture-finalize-hook ()
+  "Custom function to run after `org-capture-finalize`."
+  (let* ((buf (marker-buffer org-capture-last-stored-marker))
+         (file (buffer-file-name buf))
+         (project (with-current-buffer buf
+                    (save-excursion
+                      (goto-char (point-max))
+                      (when (re-search-backward "^:PROJECT: \\(.+\\)" nil t)
+                        (match-string 1)))))
+         (heading (with-current-buffer buf
+                    (save-excursion
+                      (goto-char (point-max))
+                      (when (re-search-backward "^\\*\\s-+\\(.*\\)" nil t)
+                        (match-string 1)))))
+         (contents (with-current-buffer buf
+                     (get-contents-under-heading file heading))))
+    (when (or (string= file "aws_work_meetings.org")
+              (string= (buffer-name buf) "aws_work_meetings.org"))
+      (message "Org capture finalized in buffer: %s, file: %s, Project: %s, Heading: %s, Contents: %s" buf file project heading contents)
+      (my/insert-subheading-under-meetings heading project contents))))
+
+(add-hook 'org-capture-after-finalize-hook 'my/org-capture-finalize-hook)
+
+(defun get-contents-under-heading (file-path heading-title)
+  "Return the contents under the specified heading in FILE-PATH."
+  (with-temp-buffer
+    (insert-file-contents file-path)
+    (goto-char (point-min))
+    (let ((contents "")
+          (found nil))
+      (while (re-search-forward (format "^\\*+ %s$" (regexp-quote heading-title)) nil t)
+        (forward-line)
+        (while (not (or (eobp) (looking-at "^\\* ")))
+          (setq contents (concat contents (buffer-substring (point) (line-end-position))) )
+          (forward-line))
+        (setq found t))
+      (if found
+          contents
+        (message "Heading not found: %s" heading-title)
+        nil))))
+
+(defun my/insert-subheading-under-meetings (h p c)
+  "Inserts string CONTENTS as a new subheading with title H under the * Meetings heading of Org Roam node P."
+  (with-current-buffer (org-roam-node-find-file p)
+    (goto-char (point-min))
+    (if (re-search-forward "^\\* Meetings" nil t)
+        (progn
+          (org-end-of-subtree)
+          (insert (format "\n* %s\n%s" h c))
+          (org-indent-line)
+          (save-buffer))
+      (progn
+        (goto-char (point-min))
+        (insert "* Meetings\n")
+        (insert (format "\n* %s\n%s" h c))
+        (org-indent-line)
+        (save-buffer)))))
+
+(defun get-node-id (project)
+  "Return the node ID of the Org Roam node with the specified PROJECT title."
+  (let ((node-id (car (org-roam-db-query
+                        [:select [id]
+                         :from nodes
+                         :where (ilike title $s1)]
+                        project))))
+    (if node-id
+        node-id
+      (car (org-roam-db-query
+            [:select [node_id]
+             :from aliases
+             :where (ilike alias $s1)]
+            project)))))
+
+;; ACK that we are using v2, not v1, and no migration steps are necessary
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/org-roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry "* %<%I:%M %p>: %?"
+       :if-new (file+head "%<%Y-%m-%d>.org" "[[id:46e38d27-6940-45ab-96ab-89456e79bed2][Journal]]\n#+title: %<%Y-%m-%d>\n"))
+     ("m" "Morning Entry" entry "* Morning Entry\n** Tasks\n+ %?\n** What Are You Grateful For?\n+ \n** Daily Affirmations\n+ \n** What are your goals for today?\n+ \n** What are you worried about?\n+ \n** What are you excited for?\n+ \n** Ideas\n"
+         :if-new (file+head "%<%Y-%m-%d>.org" "[[id:46e38d27-6940-45ab-96ab-89456e79bed2][Journal]]\n#+title: %<%Y-%m-%d>\n"))
+     ("e" "Evening Entry" entry "* Evening Entry\n** What Are You Grateful For?\n%?\n** How was the progress towards your goals?\n** Thoughts on the day?\n** Lessons Learned\n** Ideas"
+         :if-new (file+head "%<%Y-%m-%d>.org" "[[id:46e38d27-6940-45ab-96ab-89456e79bed2][Journal]]\n#+title: %<%Y-%m-%d>\n"))
+     ("w" "Work Meeting Entry" entry (function my/org-roam-capture-template)
+         :if-new (file+head "aws_work_meetings.org" ""))))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point)
+         :map org-roam-dailies-map
+         ("Y" . org-roam-dailies-capture-yesterday)
+         ("T" . org-roam-dailies-capture-tomorrow))
+  :bind-keymap
+  ("C-c n d" . org-roam-dailies-map)
+  :config
+  (require 'org-roam-dailies) ;; Ensure the keymap is available
+  (org-roam-db-autosync-mode))
+
+;; (setq org-roam-directory (file-truename "~/org-roam"))
+
+;; setup Org-roam to run functions on file changes to maintain cache consistency
+;;(org-roam-db-autosync-mode)
+
+(use-package org-roam-ui
+;;  :straight
+  ;;  (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+    :after org-roam
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t)
+)
+
+;(require 'org-ql)
+
 ;; add org files for agenda
 (setq org-agenda-files
       (append
@@ -219,7 +411,8 @@
  'org-babel-load-languages
  '((python . t)
    (sql . t)
-   (emacs-lisp . t)))
+   (emacs-lisp . t)
+   (shell . t)))
 
 ;; use 'conf-unix' header for dotfiles
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
@@ -229,6 +422,7 @@
 (add-to-list 'org-structure-template-alist '("py" . "src python"))
 (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 (add-to-list 'org-structure-template-alist '("sql" . "src sql"))
+(add-to-list 'org-structure-template-alist '("sh" . "src bash"))
 
 ;; custom structure template
 ;; example @ https://emacs.stackexchange.com/questions/51384/config-easy-template-src-code-in-0rg-9-2/51411#51411
@@ -252,8 +446,19 @@
 ;; set idle timer to stop timer if AFK for too long
 (setq org-clock-idle-time 15)
 
+(setq org-clock-mode-line-total 'today)
+
 (define-key org-mode-map "\M-n" 'org-metaleft)
 (define-key org-mode-map "\M-p" 'org-metaright)
+
+(require 'org-chef)
+
+(setq org-capture-templates
+      '(("c" "Cookbook" entry (file "~/org-roam/20250108104857-cookbook.org")
+         "%(org-chef-get-recipe-from-url)"
+         :empty-lines 1)
+        ("m" "Manual Cookbook" entry (file "~/org-roam/20250108104857-cookbook.org")
+         "* %^{Recipe title: }\n  :PROPERTIES:\n  :source-url:\n  :servings:\n  :prep-time:\n  :cook-time:\n  :ready-in:\n  :END:\n** Ingredients\n   %?\n** Directions\n\n")))
 
 ;; ====================================
 ;; Development Setup - Python
@@ -280,3 +485,52 @@
 
 ;; explicitly allow undoing of cells
 (setq ein:worksheet-enable-undo 't)
+
+(require 'treemacs)
+(global-set-key (kbd "M-0") 'treemacs-select-window)
+(global-set-key (kbd "C-x t 1") 'treemacs-delete-other-windows)
+(global-set-key (kbd "C-x t t") 'treemacs)
+(global-set-key (kbd "C-x t B") 'treemacs-bookmark)
+(global-set-key (kbd "C-x t C-t") 'treemacs-find-file)
+(global-set-key (kbd "C-x t M-t") 'treemacs-find-tag)
+
+(setq treemacs-follow-mode t)
+(setq treemacs-filewatch-mode t)
+(setq treemacs-git-mode 'deferred)
+(treemacs-follow-mode t)
+(treemacs-filewatch-mode t)
+(treemacs-fringe-indicator-mode 'always)
+
+;; Enable vue-mode for .vue files
+(require 'vue-mode)
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
+
+;; Configure web-mode for better Vue.js support
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-enable-auto-closing t) ;; Automatically close tags
+  (setq web-mode-enable-auto-quoting t)) ;; Automatically add quotes for attributes
+(add-hook 'web-mode-hook 'my-web-mode-hook)
+
+;; Enable lsp-mode for vue-mode
+(add-hook 'vue-mode-hook #'lsp)
+(add-hook 'web-mode-hook #'lsp)
+
+;; Configure lsp-mode
+(require 'lsp-mode)
+(setq lsp-prefer-flymake nil) ;; Use lsp-ui and flycheck instead of flymake
+
+;; Configure lsp-ui for better UI integration
+(require 'lsp-ui)
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+;; Company mode for code completion
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; Enable emmet-mode for Vue.js files
+(add-hook 'vue-mode-hook 'emmet-mode)
+(add-hook 'web-mode-hook 'emmet-mode)
